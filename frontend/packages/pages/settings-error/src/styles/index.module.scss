@@ -1,0 +1,23 @@
+.container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  padding: 2vh 0 0 1.39vw;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.logoImg {
+  width: 12.5vw;
+  max-width: 200px;
+}
+
+.formSide {
+  width: 33.33vw;
+}

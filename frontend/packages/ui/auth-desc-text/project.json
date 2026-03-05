@@ -1,0 +1,30 @@
+{
+  "name": "@ui/auth-desc-text",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ui/auth-desc-text/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["^build"],
+      "options": {
+        "command": "tsc && rsync -av --include '*/' --include '*.scss' --exclude '*' src/ dist/",
+        "cwd": "packages/ui/auth-desc-text"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc --noEmit",
+        "cwd": "packages/ui/auth-desc-text"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "rm -rf dist",
+        "cwd": "packages/ui/auth-desc-text"
+      }
+    }
+  }
+}

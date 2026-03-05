@@ -1,0 +1,60 @@
+{
+  "name": "workspace-root",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "yarn@4.9.1",
+  "workspaces": [
+    "entrypoint",
+    "packages/*/*"
+  ],
+  "scripts": {
+    "dev": "nx run entrypoint:dev",
+    "build": "nx run-many --target=build --all",
+    "build:affected": "nx affected --target=build",
+    "start": "nx run entrypoint:start",
+    "prepare": "husky install",
+    "install:all": "yarn install",
+    "clean": "nx run-many --target=clean --all",
+    "graph": "nx graph",
+    "typecheck": "nx run-many --target=typecheck --all"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@nx/js": "^21.0.0",
+    "@nx/next": "^21.0.0",
+    "@nx/react": "^21.0.0",
+    "depcheck": "^1.4.7",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.4.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.6",
+    "nx": "^21.0.0",
+    "prettier": "^3.6.2",
+    "stylelint": "^16.24.0",
+    "stylelint-config-standard": "^39.0.0",
+    "stylelint-config-standard-scss": "^16.0.0",
+    "stylelint-prettier": "^5.0.3",
+    "typescript-eslint": "^8.44.0"
+  },
+  "lint-staged": {
+    "app/**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --config utils/linters/eslint.config.mjs --fix",
+      "prettier --config utils/linters/.prettierrc.yaml --write"
+    ],
+    "packages/**/*.{js,jsx,ts,tsx,json,md}": [
+      "eslint --config utils/linters/eslint.config.mjs --fix",
+      "prettier --config utils/linters/.prettierrc.yaml --write"
+    ],
+    "entrypoint/**/*.{css,scss}": [
+      "stylelint --config utils/linters/.stylelintrc.json --fix"
+    ],
+    "packages/**/*.{css,scss}": [
+      "stylelint --config utils/linters/.stylelintrc.json --fix"
+    ]
+  }
+}

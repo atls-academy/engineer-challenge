@@ -1,0 +1,5 @@
+{
+  "stylelint": {
+    "config_path": "./utils/linters/.stylelintrc.json",
+  },
+}

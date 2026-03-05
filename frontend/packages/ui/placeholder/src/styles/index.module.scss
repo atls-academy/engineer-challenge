@@ -1,0 +1,179 @@
+.authContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 3vh;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 3.5rem;
+}
+
+.inputPlaceHolder {
+  border: none;
+  border-bottom: 1px solid #ddd;
+  padding: 0;
+  height: 3.5rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: normal;
+  color: #1f1f27;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  padding-top: 1.25rem;
+  box-sizing: border-box;
+  transition: border-bottom-color 0.2s ease;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:focus {
+    border-bottom: 1px solid #2f80ed;
+  }
+
+  &:-webkit-autofill {
+    animation-name: onAutoFillStart;
+    animation-duration: 0.001s;
+    -webkit-box-shadow: 0 0 0 1000px #fff inset;
+    box-shadow: 0 0 0 1000px #fff inset;
+    -webkit-text-fill-color: #1f1f27;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #fff inset;
+    box-shadow: 0 0 0 1000px #fff inset;
+    -webkit-text-fill-color: #1f1f27;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  &:not(:-webkit-autofill) {
+    animation-name: onAutoFillCancel;
+    animation-duration: 0.001s;
+  }
+}
+
+.inputPlaceHolderError {
+  border-bottom: 1px solid #d23939 !important;
+
+  &:focus {
+    border-bottom: 1px solid #d23939 !important;
+  }
+}
+
+.inputTitle {
+  position: absolute;
+  left: 0;
+  bottom: 0.6rem;
+  top: auto;
+  transform: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: rgba(31, 31, 39, 0.3);
+  pointer-events: none;
+  transition: 0.2s ease;
+}
+
+.inputPlaceHolder:focus + .inputTitle,
+.inputPlaceHolder:not(:placeholder-shown) + .inputTitle {
+  bottom: auto;
+  top: 0.25rem;
+  transform: none;
+  font-size: 0.75rem;
+  line-height: 1;
+  color: #81869a;
+}
+
+.inputTitleActive {
+  bottom: auto !important;
+  top: 0.25rem !important;
+  transform: none !important;
+  font-size: 0.75rem !important;
+  line-height: 1 !important;
+  color: #81869a !important;
+}
+
+.inputTitleError {
+  color: #d23939 !important;
+}
+
+.buttonLogin {
+  margin-top: 0.5rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  border: none;
+  background: #31a0f0;
+  cursor: pointer;
+  transition: 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.buttonSecondary {
+  background: rgba(49, 160, 240, 0.1);
+  gap: 0.625rem;
+}
+
+.buttonTextStyle {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+}
+
+.buttonTextSecondary {
+  color: #31a0f0;
+}
+
+.eyeButton {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  box-shadow: none;
+  -webkit-appearance: none;
+}
+
+.eyeIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  opacity: 0.4;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.errorText {
+  display: block;
+  margin-top: 0.1vh;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0;
+  color: #d23939;
+}

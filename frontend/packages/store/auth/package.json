@@ -1,0 +1,26 @@
+{
+  "name": "@store/auth",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "tsc && rsync -av --include '*/' --include '*.scss' --exclude '*' src/ dist/",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^2.0.0",
+    "graphql": "^16.13.1",
+    "graphql-request": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "typescript": "^5.9.2"
+  },
+  "source": "src/index.ts"
+}

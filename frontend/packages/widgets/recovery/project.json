@@ -1,0 +1,30 @@
+{
+  "name": "@widgets/recovery",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/widgets/recovery/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["^build"],
+      "options": {
+        "command": "tsc -p tsconfig.json && rsync -av --include '*/' --include '*.scss' --exclude '*' src/ dist/",
+        "cwd": "packages/widgets/recovery"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc -p tsconfig.json --noEmit",
+        "cwd": "packages/widgets/recovery"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "rm -rf dist",
+        "cwd": "packages/widgets/recovery"
+      }
+    }
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "baseUrl": ".",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@ui/buttons": [
+        "../packages/ui/buttons/src"
+      ],
+      "@ui/buttons/*": [
+        "../packages/ui/buttons/src/*"
+      ],
+      "@ui/placeholder": [
+        "../packages/ui/placeholder/src"
+      ],
+      "@ui/placeholder/*": [
+        "../packages/ui/placeholder/src/*"
+      ],
+      "@pages/login": [
+        "../packages/pages/login/src"
+      ],
+      "@pages/login/*": [
+        "../packages/pages/login/src/*"
+      ],
+      "@pages/registration": [
+        "../packages/pages/registration/src"
+      ],
+      "@pages/registration/*": [
+        "../packages/pages/registration/src/*"
+      ],
+      "@pages/recovery": [
+        "../packages/pages/recovery/src"
+      ],
+      "@pages/recovery/*": [
+        "../packages/pages/recovery/src/*"
+      ],
+      "@pages/placeholder-title": [
+        "../packages/ui/placeholder-title/src"
+      ],
+      "@pages/placeholder-title/*": [
+        "../packages/ui/placeholder-title/src/*"
+      ],
+      "@pages/recovery-sent": [
+        "../packages/pages/recovery-sent/src"
+      ],
+      "@pages/recovery-sent/*": [
+        "../packages/pages/recovery-sent/src/*"
+      ],
+      "@pages/settings": [
+        "../packages/pages/settings/src"
+      ],
+      "@pages/settings/*": [
+        "../packages/pages/settings/src/*"
+      ],
+      "@pages/settings-success": [
+        "../packages/pages/settings-success/src"
+      ],
+      "@pages/settings-success/*": [
+        "../packages/pages/settings-success/src/*"
+      ],
+      "@pages/settings-error": [
+        "../packages/pages/settings-error/src"
+      ],
+      "@pages/settings-error/*": [
+        "../packages/pages/settings-error/src/*"
+      ],
+      "@widgets/login": [
+        "../packages/widgets/login/src"
+      ],
+      "@widgets/login/*": [
+        "../packages/widgets/login/src/*"
+      ],
+      "@widgets/auth-footer": [
+        "../packages/ui/auth-footer/src"
+      ],
+      "@widgets/auth-footer/*": [
+        "../packages/ui/auth-footer/src/*"
+      ],
+      "@ui/auth-desc-text": [
+        "../packages/ui/auth-desc-text/src"
+      ],
+      "@ui/auth-desc-text/*": [
+        "../packages/ui/auth-desc-text/src/*"
+      ],
+      "@widgets/recovery": [
+        "../packages/widgets/recovery/src"
+      ],
+      "@froms/recovery/*": [
+        "../packages/widgets/recovery/src/*"
+      ],
+      "@store/auth": [
+        "../packages/store/auth/src"
+      ],
+      "@store/auth*": [
+        "../packages/store/auth/src/*"
+      ],
+      "@store/root": [
+        "../packages/store/root/src"
+      ],
+      "@store/root*": [
+        "../packages/store/root/src/*"
+      ],
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

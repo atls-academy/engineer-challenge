@@ -1,0 +1,29 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: #c0c2cb;
+  text-align: center;
+}
+
+.link {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1;
+  color: #31a0f0;
+  text-align: center;
+  text-decoration: none;
+}
+
+.underline {
+  text-decoration: underline;
+}

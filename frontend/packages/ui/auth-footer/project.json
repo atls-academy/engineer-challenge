@@ -1,0 +1,30 @@
+{
+  "name": "@ui/auth-footer",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ui/auth-footer/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["^build"],
+      "options": {
+        "command": "tsc && rsync -av --include '*/' --include '*.scss' --exclude '*' src/ dist/",
+        "cwd": "packages/ui/auth-footer"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc --noEmit",
+        "cwd": "packages/ui/auth-footer"
+      }
+    },
+    "clean": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "rm -rf dist",
+        "cwd": "packages/ui/auth-footer"
+      }
+    }
+  }
+}

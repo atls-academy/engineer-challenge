@@ -1,0 +1,30 @@
+{
+  "extends": [
+    "stylelint-config-standard-scss",
+    "stylelint-prettier/recommended"
+  ],
+  "plugins": ["stylelint-prettier"],
+  "rules": {
+    "at-rule-no-unknown": null,
+    "scss/at-rule-no-unknown": true,
+    "custom-property-pattern": null,
+    "selector-class-pattern": null,
+    "alpha-value-notation": null,
+    "color-function-notation": null,
+    "selector-max-id": 0,
+    "unit-allowed-list": [
+      "%",
+      "deg",
+      "rem",
+      "ms",
+      "dvh",
+      "s",
+      "vh",
+      "px",
+      "em",
+      "vm",
+      "vw"
+    ]
+  },
+  "defaultSeverity": "warning"
+}

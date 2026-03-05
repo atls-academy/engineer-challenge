@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  width: 100vw;
+}
+
+.left {
+  width: 38.89vw;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.logo {
+  padding: 2vh 0 0 1.39vw;
+}
+
+.logoImg {
+  width: 12.5vw;
+  max-width: 200px;
+}
+
+.formSide {
+  padding: 18.125vh 5.555vw 25vh;
+  flex: 1;
+}
+
+.authDesc {
+  margin-top: 1.5rem;
+}
+
+.bottom {
+  padding: 0 5.55vw;
+  padding-bottom: 2rem;
+}
+
+.imageSide {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.imageSideImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}

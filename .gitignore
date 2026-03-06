@@ -1,1 +1,39 @@
-.idea
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+/bin/
+/server
+
+# Test
+*.test
+*.out
+coverage.html
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+!.env.example
+
+# Node
+node_modules/
+dist/
+build/
+
+# Go
+vendor/
+
+# Generated protobuf
+internal/interfaces/grpc/pb/*.go

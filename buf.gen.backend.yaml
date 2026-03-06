@@ -1,0 +1,11 @@
+version: v1
+plugins:
+  - plugin: buf.build/protocolbuffers/go:v1.36.1
+    out: internal/infra/grpc/pkg
+    opt: paths=source_relative
+  - plugin: buf.build/grpc/go:v1.5.1
+    out: internal/infra/grpc/pkg
+    opt: paths=source_relative
+  - plugin: buf.build/connectrpc/go:v1.19.0
+    out: internal/infra/grpc/pkg
+    opt: paths=source_relative

@@ -1,8 +1,12 @@
 'use client'
 import React, { FC } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { PlaceholderForm, Field } from '@ui/placeholder'
 import { PlaceholderTitle } from '@ui/placeholder-title'
 import { Button } from '@ui/buttons'
+import { recoveryThunk } from '@store/auth'
+import { selectAuthLoading, selectAuthError } from '@store/auth'
+import type { AppDispatch } from '@store/root'
 import styles from './styles/index.module.scss'
 
 const fields: Field[] = [
@@ -11,18 +15,23 @@ const fields: Field[] = [
     type: 'email',
     placeholder: 'Введите email',
     title: 'Введите email',
+    required: true,
   },
 ]
-
-const handleSubmit = (values: Record<string, string>) => {
-  console.log('Форма отправлена:', values)
-}
 
 type RecoveryFormProps = {
   onBack?: () => void
 }
 
 export const RecoveryForm: FC<RecoveryFormProps> = ({ onBack }) => {
+  const dispatch = useDispatch<AppDispatch>()
+  const loading = useSelector(selectAuthLoading)
+  const error = useSelector(selectAuthError)
+
+  const handleSubmit = (values: Record<string, string>) => {
+    dispatch(recoveryThunk({ email: values.email }))
+  }
+
   return (
     <div className={styles.loginContainer}>
       <div className={styles.titleWrapper}>
@@ -33,10 +42,11 @@ export const RecoveryForm: FC<RecoveryFormProps> = ({ onBack }) => {
           onIconClick={onBack}
         />
       </div>
+      {error && <span style={{ color: 'red', fontSize: '14px' }}>{error}</span>}
       <PlaceholderForm
         fields={fields}
         onSubmit={handleSubmit}
-        button={<Button text="Восстановить" design="secondary" />}
+        button={<Button text={loading ? 'Загрузка...' : 'Восстановить'} design="secondary" />}
       />
     </div>
   )

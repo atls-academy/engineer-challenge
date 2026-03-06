@@ -10,9 +10,7 @@ export interface RegisterInput {
 }
 
 export interface RecoveryInput {
-  flow: string
-  token: string
-  password: string
+  email: string
 }
 
 export interface AuthState {

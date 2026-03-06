@@ -1,5 +1,5 @@
 'use client'
-import { UpdatePasswordForm } from '../../../widgets/recovery/src'
+import { UpdatePasswordForm } from '@widgets/recovery'
 import styles from './styles/index.module.scss'
 
 type UpdatePasswordPageProps = {

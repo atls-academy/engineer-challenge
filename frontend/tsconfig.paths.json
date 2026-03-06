@@ -1,22 +1,54 @@
 {
   "compilerOptions": {
     "paths": {
-      "@ui/buttons": ["packages/ui/buttons"],
-      "@ui/placeholder": ["packages/ui/placeholder"],
-      "@ui/auth-desc-text": ["packages/ui/auth-desc-text"],
-      "@auth-footer": ["packages/ui/auth-footer"],
-      "@placeholder-title": ["packages/ui/placeholder-title"],
-      "@pages/login": ["packages/pages/login"],
-      "@pages/registration": ["packages/pages/registration"],
-      "@pages/recovery": ["packages/pages/recovery"],
-      "@pages/recovery-sent": ["packages/pages/recovery-sent"],
-      "@pages/settings": ["packages/pages/settings"],
-      "@pages/settings-success": ["packages/pages/settings-success"],
-      "@pages/settings-error": ["packages/pages/settings-error"],
-      "@widgets/login": ["packages/widgets/login"],
-      "@widgets/recovery": ["packages/widgets/recovery"],
-      "@store/auth": ["packages/store/auth"],
-      "@store/root": ["packages/store/root"]
+      "@ui/buttons": [
+        "packages/ui/buttons"
+      ],
+      "@ui/placeholder": [
+        "packages/ui/placeholder"
+      ],
+      "@ui/auth-desc-text": [
+        "packages/ui/auth-desc-text"
+      ],
+      "@auth-footer": [
+        "packages/ui/auth-footer"
+      ],
+      "@placeholder-title": [
+        "packages/ui/placeholder-title"
+      ],
+      "@pages/login": [
+        "packages/pages/login"
+      ],
+      "@pages/registration": [
+        "packages/pages/registration"
+      ],
+      "@pages/recovery": [
+        "packages/pages/recovery"
+      ],
+      "@pages/recovery-sent": [
+        "packages/pages/recovery-sent"
+      ],
+      "@pages/settings": [
+        "packages/pages/settings"
+      ],
+      "@pages/settings-success": [
+        "packages/pages/settings-success"
+      ],
+      "@pages/settings-error": [
+        "packages/pages/settings-error"
+      ],
+      "@widgets/login": [
+        "packages/widgets/login"
+      ],
+      "@widgets/recovery": [
+        "packages/widgets/recovery"
+      ],
+      "@store/auth": [
+        "packages/store/auth"
+      ],
+      "@store/root": [
+        "packages/store/root"
+      ]
     }
   }
 }

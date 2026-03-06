@@ -28,9 +28,14 @@ export const LoginForm = () => {
   const error = useAppSelector(selectAuthError)
 
   const handleSubmit = (values: Record<string, string>) => {
-    dispatch(
-      loginThunk({ identifier: values.email, password: values.password })
-    )
+    dispatch(loginThunk({ identifier: values.email, password: values.password }))
+      .then((result) => {
+        if (loginThunk.fulfilled.match(result)) {
+          console.log('Login success')
+        } else {
+          console.log('Login failed:', result.payload)
+        }
+      })
   }
 
   return (

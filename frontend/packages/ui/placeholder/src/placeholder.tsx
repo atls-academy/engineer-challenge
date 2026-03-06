@@ -11,13 +11,10 @@ export type Field = {
   required?: boolean
 }
 
-type ButtonDesign = 'primary' | 'secondary'
-
 type PlaceholderFormProps = {
   fields: Field[]
-  buttonText?: string
-  buttonDesign?: ButtonDesign
   onSubmit?: (values: Record<string, string>) => void
+  button?: React.ReactNode
 }
 
 const MIN_PASSWORD_LENGTH = 8
@@ -39,9 +36,8 @@ const validateField = (field: Field, value: string): string => {
 
 export const PlaceholderForm: FC<PlaceholderFormProps> = ({
   fields,
-  buttonText = 'Войти',
-  buttonDesign = 'primary',
   onSubmit,
+  button,
 }) => {
   const [values, setValues] = useState(
     fields.reduce(
@@ -55,9 +51,7 @@ export const PlaceholderForm: FC<PlaceholderFormProps> = ({
 
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [autofilled, setAutofilled] = useState<Record<string, boolean>>({})
-  const [visibleFields, setVisibleFields] = useState<Record<string, boolean>>(
-    {}
-  )
+  const [visibleFields, setVisibleFields] = useState<Record<string, boolean>>({})
   const formRef = useRef<HTMLFormElement>(null)
 
   useEffect(() => {
@@ -65,9 +59,7 @@ export const PlaceholderForm: FC<PlaceholderFormProps> = ({
       if (!formRef.current) return
       const newAutofilled: Record<string, boolean> = {}
       fields.forEach((field) => {
-        const el = formRef.current?.querySelector<HTMLInputElement>(
-          `#${field.name}`
-        )
+        const el = formRef.current?.querySelector<HTMLInputElement>(`#${field.name}`)
         if (el) {
           try {
             newAutofilled[field.name] = el.matches(':-webkit-autofill')
@@ -164,16 +156,11 @@ export const PlaceholderForm: FC<PlaceholderFormProps> = ({
         </div>
       ))}
 
-      <button
-        type="submit"
-        className={`${styles.buttonLogin} ${buttonDesign === 'secondary' ? styles.buttonSecondary : ''}`}
-      >
-        <span
-          className={`${styles.buttonTextStyle} ${buttonDesign === 'secondary' ? styles.buttonTextSecondary : ''}`}
-        >
-          {buttonText}
-        </span>
-      </button>
+      {button && (
+        <div className={styles.submitWrapper}>
+          {button}
+        </div>
+      )}
     </form>
   )
 }

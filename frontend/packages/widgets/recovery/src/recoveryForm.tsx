@@ -2,6 +2,7 @@
 import React, { FC } from 'react'
 import { PlaceholderForm, Field } from '@ui/placeholder'
 import { PlaceholderTitle } from '@ui/placeholder-title'
+import { Button } from '@ui/buttons'
 import styles from './styles/index.module.scss'
 
 const fields: Field[] = [
@@ -34,9 +35,8 @@ export const RecoveryForm: FC<RecoveryFormProps> = ({ onBack }) => {
       </div>
       <PlaceholderForm
         fields={fields}
-        buttonText="Восстановить"
-        buttonDesign="secondary"
         onSubmit={handleSubmit}
+        button={<Button text="Восстановить" design="secondary" />}
       />
     </div>
   )

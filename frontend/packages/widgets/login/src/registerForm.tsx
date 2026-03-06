@@ -2,6 +2,7 @@
 import React from 'react'
 import { PlaceholderForm, Field } from '@ui/placeholder'
 import { PlaceholderTitle } from '@ui/placeholder-title'
+import { Button } from '@ui/buttons'
 import { useAppDispatch, useAppSelector } from '@store/root'
 import { registerThunk, selectAuthLoading, selectAuthError } from '@store/auth'
 import styles from './styles/index.module.scss'
@@ -50,8 +51,8 @@ export const RegisterForm = () => {
       {error && <p className={styles.error}>{error}</p>}
       <PlaceholderForm
         fields={fields}
-        buttonText={loading ? 'Загрузка...' : 'Зарегистрироваться'}
         onSubmit={handleSubmit}
+        button={<Button text={loading ? 'Загрузка...' : 'Зарегистрироваться'} />}
       />
     </div>
   )

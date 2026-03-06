@@ -9,12 +9,8 @@ declare const styles: {
   readonly inputTitleActive: string
   readonly inputTitleError: string
   readonly errorText: string
-  readonly buttonLogin: string
-  readonly buttonSecondary: string
-  readonly buttonTextStyle: string
-  readonly buttonTextSecondary: string
   readonly eyeButton: string
   readonly eyeIcon: string
+  readonly submitWrapper: string
 }
-
 export default styles

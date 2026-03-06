@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.0",
-    "@store/auth": "*",
     "react-redux": "^9.0.0"
   },
   "devDependencies": {

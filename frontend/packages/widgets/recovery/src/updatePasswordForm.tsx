@@ -2,6 +2,7 @@
 import React, { FC } from 'react'
 import { PlaceholderForm, Field } from '@ui/placeholder'
 import { PlaceholderTitle } from '@ui/placeholder-title'
+import { Button } from '@ui/buttons'
 import styles from './styles/index.module.scss'
 
 const fields: Field[] = [
@@ -38,8 +39,8 @@ export const UpdatePasswordForm: FC<UpdatePasswordFormProps> = ({ onBack }) => {
       </div>
       <PlaceholderForm
         fields={fields}
-        buttonText="Изменить пароль"
         onSubmit={handleSubmit}
+        button={<Button text="Изменить пароль" />}
       />
     </div>
   )

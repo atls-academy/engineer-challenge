@@ -2,6 +2,7 @@
 import React from 'react'
 import { PlaceholderForm, Field } from '@ui/placeholder'
 import { PlaceholderTitle } from '@ui/placeholder-title'
+import { Button } from '@ui/buttons'
 import { useAppDispatch, useAppSelector } from '@store/root'
 import { loginThunk, selectAuthLoading, selectAuthError } from '@store/auth'
 import styles from './styles/index.module.scss'
@@ -31,6 +32,7 @@ export const LoginForm = () => {
       loginThunk({ identifier: values.email, password: values.password })
     )
   }
+
   return (
     <div className={styles.loginContainer}>
       <div className={styles.titleWrapper}>
@@ -39,8 +41,8 @@ export const LoginForm = () => {
       {error && <p className={styles.error}>{error}</p>}
       <PlaceholderForm
         fields={fields}
-        buttonText={loading ? 'Загрузка...' : 'Войти'}
         onSubmit={handleSubmit}
+        button={<Button text={loading ? 'Загрузка...' : 'Войти'} />}
       />
     </div>
   )

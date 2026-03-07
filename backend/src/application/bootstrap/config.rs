@@ -1,5 +1,6 @@
 use serde::Deserialize;
 use std::env;
+use tracing::info;
 
 #[derive(Debug, Clone, Copy)]
 pub enum Environment {
@@ -82,6 +83,8 @@ pub struct ServerConfig {
     pub port: u16,
     #[serde(default = "default_log_level")]
     pub log_level: String,
+    #[serde(default = "default_cors_max_age")]
+    pub cors_max_age: usize,
 }
 
 impl Config {
@@ -89,7 +92,11 @@ impl Config {
         dotenvy::dotenv().ok();
 
         let environment = Environment::from_env();
-        let config_path = format!("config/app/{}", environment.config_filename());
+        let config_filename = environment.config_filename();
+        let config_path = format!("config/app/{}", config_filename);
+
+        info!(path = %format!("{}.toml", config_path), "Loading config file");
+
         let builder = config::Config::builder()
             .add_source(
                 config::File::with_name(&config_path)
@@ -101,6 +108,7 @@ impl Config {
                     .separator("__")
                     .try_parsing(true),
             );
+
         builder.build()?.try_deserialize()
     }
 }
@@ -134,4 +142,7 @@ fn default_token_lifespan() -> u64 {
 }
 fn default_log_level() -> String {
     "info".to_string()
+}
+fn default_cors_max_age() -> usize {
+    3600
 }

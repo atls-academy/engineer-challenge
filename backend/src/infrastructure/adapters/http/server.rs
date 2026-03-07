@@ -3,7 +3,7 @@ use crate::infrastructure::adapters::graphql::handlers::{graphql_handler, graphq
 use crate::infrastructure::adapters::hydra::client::HydraClient;
 use crate::infrastructure::adapters::kratos::client::KratosClient;
 use crate::presentation::api::graphql::schema::AppSchema;
-use crate::presentation::api::rest::{email_sender, health_check, hydra, kratos_login};
+use crate::presentation::api::rest::{email_sender, health_check, hydra};
 use actix_cors::Cors;
 use actix_web::{App, HttpServer, http, web};
 use actix_web_prometheus::PrometheusMetricsBuilder;
@@ -26,6 +26,8 @@ pub async fn start(
         .build()
         .map_err(|e| anyhow::anyhow!("Failed to build Prometheus metrics: {}", e))?;
 
+    let cors_max_age = config.cors_max_age;
+
     let bind_address_clone = bind_address.clone();
     let server = HttpServer::new(move || {
         let cors = Cors::default()
@@ -37,7 +39,7 @@ pub async fn start(
                 http::header::ACCEPT,
             ])
             .supports_credentials()
-            .max_age(3600);
+            .max_age(cors_max_age);
 
         App::new()
             .wrap(prometheus.clone())
@@ -54,7 +56,6 @@ pub async fn start(
             .configure(health_check::configure)
             .configure(email_sender::configure)
             .configure(hydra::configure)
-            .configure(kratos_login::configure)
     })
     .bind(&bind_address_clone)
     .with_context(|| format!("Failed to bind server to {}", bind_address_clone))?;

@@ -12,7 +12,7 @@ struct KratosLoginRequest {
 
 #[post("/login/kratos")]
 #[instrument(skip(hydra, req))]
-async fn login_kratos(
+pub async fn login_kratos(
     body: web::Json<KratosLoginRequest>,
     hydra: web::Data<Arc<HydraClient>>,
     req: HttpRequest,
@@ -69,8 +69,4 @@ async fn login_kratos(
     HttpResponse::Ok().json(serde_json::json!({
         "redirect_to": accepted.redirect_to
     }))
-}
-
-pub fn configure(cfg: &mut web::ServiceConfig) {
-    cfg.service(login_kratos);
 }

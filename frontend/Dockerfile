@@ -5,7 +5,6 @@ WORKDIR /app
 
 FROM base AS deps
 COPY package.json yarn.lock .yarnrc.yml ./
-COPY .yarn ./.yarn
 COPY packages ./packages
 COPY entrypoint/package.json ./entrypoint/
 RUN yarn install --no-immutable
@@ -14,7 +13,6 @@ FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/packages ./packages
 COPY package.json yarn.lock .yarnrc.yml nx.json tsconfig.base.json tsconfig.paths.json ./
-COPY .yarn ./.yarn
 COPY entrypoint ./entrypoint
 RUN yarn install --no-immutable
 RUN yarn nx build entrypoint --prod

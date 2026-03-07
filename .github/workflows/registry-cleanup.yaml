@@ -1,0 +1,28 @@
+name: Cleanup Docker Registry
+on:
+  workflow_dispatch:
+
+jobs:
+  cleanup-frontend:
+    uses: vwency/workflow/.github/workflows/clean-registry.yaml@main
+    with:
+      owner: ${{ github.repository_owner }}
+      repository: engineer-challenge
+      package: engineer-challenge/frontend-entrypoint
+      keep_n_tagged: 2
+      keep_un_tagged: 0
+      dry_run: false
+    secrets:
+      personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+  cleanup-backend:
+    uses: vwency/workflow/.github/workflows/clean-registry.yaml@main
+    with:
+      owner: ${{ github.repository_owner }}
+      repository: engineer-challenge
+      package: engineer-challenge/backend
+      keep_n_tagged: 2
+      keep_un_tagged: 0
+      dry_run: false
+    secrets:
+      personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}

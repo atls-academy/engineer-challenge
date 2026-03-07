@@ -31,7 +31,7 @@ jobs:
     uses: vwency/workflow/.github/workflows/clean-registry.yaml@main
     with:
       owner: ${{ github.repository_owner }}
-      repository: frontend
+      repository: engineer-challenge
       package: engineer-challenge/backend
       keep_n_tagged: 2
       dry_run: false

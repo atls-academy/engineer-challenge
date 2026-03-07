@@ -41,3 +41,5 @@ Thumbs.db
 
 # typescript
 *.tsbuildinfo
+
+**/coverage/

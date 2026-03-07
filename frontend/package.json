@@ -16,13 +16,15 @@
     "install:all": "yarn install",
     "clean": "nx run-many --target=clean --all",
     "graph": "nx graph",
-    "typecheck": "nx run-many --target=typecheck --all"
+    "typecheck": "nx run-many --target=typecheck --all",
+    "test": "nx run-many --target=test --all --output-style=stream",
+    "test:coverage": "nx run-many --target=test:coverage --all --output-style=stream"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
-    "@nx/js": "^21.0.0",
-    "@nx/next": "^21.0.0",
-    "@nx/react": "^21.0.0",
+    "@nx/js": "^22.0.0",
+    "@nx/next": "^22.0.0",
+    "@nx/react": "^22.5.0",
     "depcheck": "^1.4.7",
     "eslint": "^9.36.0",
     "eslint-config-prettier": "^10.1.8",

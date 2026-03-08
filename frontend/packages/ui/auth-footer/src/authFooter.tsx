@@ -15,10 +15,12 @@ export const AuthFooter: FC<AuthFooterProps> = ({
 }) => {
   return (
     <div className={styles.footer}>
-      <span className={styles.text}>{text}</span>
-      <a href={linkHref} className={styles.link}>
-        {linkText}
-      </a>
+      <div className={styles.container}>
+        <span className={styles.text}>{text}</span>
+        <a href={linkHref} className={styles.link}>
+          {linkText}
+        </a>
+      </div>
     </div>
   )
 }

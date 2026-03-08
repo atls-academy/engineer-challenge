@@ -34,6 +34,13 @@ const validateField = (field: Field, value: string): string => {
   return ''
 }
 
+const getInputType = (field: Field, isVisible: boolean): string => {
+  if (field.type === 'password') {
+    return isVisible ? 'text' : 'password'
+  }
+  return 'text'
+}
+
 export const PlaceholderForm: FC<PlaceholderFormProps> = ({
   fields,
   onSubmit,
@@ -112,13 +119,7 @@ export const PlaceholderForm: FC<PlaceholderFormProps> = ({
             className={`${styles.inputWrapper} ${errors[field.name] ? styles.inputWrapperError : ''}`}
           >
             <input
-              type={
-                field.type === 'password'
-                  ? visibleFields[field.name]
-                    ? 'text'
-                    : 'password'
-                  : 'text'
-              }
+              type={getInputType(field, visibleFields[field.name])}
               inputMode={field.type === 'email' ? 'email' : undefined}
               name={field.name}
               placeholder=" "

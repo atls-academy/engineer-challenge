@@ -19,12 +19,19 @@ export const PlaceholderTitle: FC<PlaceholderTitleProps> = ({
     <div>
       <div className={styles.titleRow}>
         {iconSrc && (
-          <img
-            src={iconSrc}
-            alt=""
-            className={`${styles.icon} ${onIconClick ? styles.iconClickable : ''}`}
-            onClick={onIconClick}
-          />
+          onIconClick ? (
+            <button
+              type="button"
+              role="button"
+              onClick={onIconClick}
+              onKeyDown={(e) => e.key === 'Enter' && onIconClick()}
+              className={`${styles.icon} ${styles.iconClickable}`}
+            >
+              <img src={iconSrc} alt="" />
+            </button>
+          ) : (
+            <img src={iconSrc} alt="" className={styles.icon} />
+          )
         )}
         <h1 className={styles.title}>{text}</h1>
       </div>

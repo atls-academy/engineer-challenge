@@ -4,7 +4,7 @@ let clientInstance: GraphQLClient | null = null
 
 export const getClient = (): GraphQLClient => {
   if (!clientInstance) {
-    const url = typeof window === 'undefined'
+    const url = typeof globalThis.window === 'undefined'
       ? process.env.NEXT_INTERNAL_GRAPHQL_URL!
       : process.env.NEXT_PUBLIC_GRAPHQL_URL!
 

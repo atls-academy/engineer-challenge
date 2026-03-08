@@ -1,5 +1,5 @@
 import { NextConfig } from 'next'
-import path from 'path'
+import path from 'node:path'
 
 const root = path.resolve(__dirname, '..')
 const pkg = (p: string) => path.resolve(root, 'packages', p, 'src')

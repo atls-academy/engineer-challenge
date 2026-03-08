@@ -21,7 +21,7 @@ export const AuthDescText: FC<AuthDescTextProps> = ({
     const parts = str.split(regex)
     return parts.map((part, i) =>
       underlineWords.includes(part) ? (
-        <span key={i} className={styles.underline}>
+        <span key={`${part}-${i}`} className={styles.underline}>
           {part}
         </span>
       ) : (

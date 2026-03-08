@@ -22,7 +22,6 @@ export const PlaceholderTitle: FC<PlaceholderTitleProps> = ({
           onIconClick ? (
             <button
               type="button"
-              role="button"
               onClick={onIconClick}
               onKeyDown={(e) => e.key === 'Enter' && onIconClick()}
               className={`${styles.icon} ${styles.iconClickable}`}

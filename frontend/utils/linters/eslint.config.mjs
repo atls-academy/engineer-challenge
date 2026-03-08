@@ -8,8 +8,8 @@ import prettierPlugin from 'eslint-plugin-prettier'
 import tseslint from 'typescript-eslint'
 import eslintConfigPrettier from 'eslint-config-prettier'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 
 const PACKAGE_DIRS = ['app', 'packages']
 

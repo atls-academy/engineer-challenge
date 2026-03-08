@@ -1,6 +1,6 @@
 FROM node:lts-alpine AS base
-RUN apk add --no-cache libc6-compat rsync
-RUN corepack enable && corepack prepare yarn@4.9.1 --activate
+RUN apk add --no-cache libc6-compat rsync \
+  && corepack enable && corepack prepare yarn@4.9.1 --activate
 WORKDIR /app
 
 FROM base AS deps
@@ -14,8 +14,8 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/packages ./packages
 COPY package.json yarn.lock .yarnrc.yml nx.json tsconfig.base.json tsconfig.paths.json ./
 COPY entrypoint ./entrypoint
-RUN yarn install --no-immutable
-RUN yarn nx build entrypoint --prod
+RUN yarn install --no-immutable \
+  && yarn nx build entrypoint --prod
 
 FROM base AS runner
 WORKDIR /app

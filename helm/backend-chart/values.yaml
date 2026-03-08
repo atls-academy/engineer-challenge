@@ -1,0 +1,79 @@
+namespace: default
+
+image:
+  repository: ghcr.io/vwency/engineer-challenge/backend
+  tag: master
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: ghcr-secret
+
+replicaCount: 2
+
+serviceAccount:
+  name: backend-sa
+
+labels:
+  app: backend
+  version: v1
+
+containerPort: 8080
+
+env:
+  APP_ENV: "development"
+  APP__SERVER__HOST: "0.0.0.0"
+  APP__SERVER__PORT: "8080"
+
+kratos:
+  adminUrl: "http://kratos-admin.kratos.svc.cluster.local:4434"
+  publicUrl: "http://kratos-public.kratos.svc.cluster.local:4433"
+  timeoutSecs: "120"
+  connectTimeoutSecs: "30"
+  poolIdleTimeoutSecs: "120"
+  poolMaxIdlePerHost: "10"
+  maxRetries: "3"
+  retryDelayMs: "1000"
+  acceptInvalidCerts: "true"
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+livenessProbe:
+  path: /health
+  initialDelaySeconds: 30
+  periodSeconds: 10
+
+readinessProbe:
+  path: /health
+  initialDelaySeconds: 5
+  periodSeconds: 5
+
+service:
+  port: 8080
+
+istio:
+  gateway:
+    name: main-gateway
+    port: 80
+    protocol: HTTP
+    hosts:
+      - "*"
+
+  virtualService:
+    name: backend
+    hosts:
+      - "*"
+    gatewayRef: frontend-gateway
+    uriPrefix: /api
+
+  destinationRule:
+    name: backend
+    loadBalancer: ROUND_ROBIN
+    subsets:
+      - name: v1
+        version: v1

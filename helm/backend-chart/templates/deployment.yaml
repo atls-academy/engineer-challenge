@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.labels.app }}
+    version: {{ .Values.labels.version }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.labels.app }}
+      version: {{ .Values.labels.version }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.labels.app }}
+        version: {{ .Values.labels.version }}
+    spec:
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+      containers:
+        - name: backend
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.containerPort }}
+              name: http
+              protocol: TCP
+          env:
+            - name: APP_ENV
+              value: {{ .Values.env.APP_ENV | quote }}
+            - name: APP__KRATOS__ADMIN_URL
+              value: {{ .Values.kratos.adminUrl | quote }}
+            - name: APP__KRATOS__PUBLIC_URL
+              value: {{ .Values.kratos.publicUrl | quote }}
+            - name: APP__KRATOS__TIMEOUT_SECS
+              value: {{ .Values.kratos.timeoutSecs | quote }}
+            - name: APP__KRATOS__CONNECT_TIMEOUT_SECS
+              value: {{ .Values.kratos.connectTimeoutSecs | quote }}
+            - name: APP__KRATOS__POOL_IDLE_TIMEOUT_SECS
+              value: {{ .Values.kratos.poolIdleTimeoutSecs | quote }}
+            - name: APP__KRATOS__POOL_MAX_IDLE_PER_HOST
+              value: {{ .Values.kratos.poolMaxIdlePerHost | quote }}
+            - name: APP__KRATOS__MAX_RETRIES
+              value: {{ .Values.kratos.maxRetries | quote }}
+            - name: APP__KRATOS__RETRY_DELAY_MS
+              value: {{ .Values.kratos.retryDelayMs | quote }}
+            - name: APP__KRATOS__ACCEPT_INVALID_CERTS
+              value: {{ .Values.kratos.acceptInvalidCerts | quote }}
+            - name: APP__SERVER__HOST
+              value: {{ .Values.env.APP__SERVER__HOST | quote }}
+            - name: APP__SERVER__PORT
+              value: {{ .Values.env.APP__SERVER__PORT | quote }}
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.livenessProbe.path }}
+              port: {{ .Values.containerPort }}
+            initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.readinessProbe.path }}
+              port: {{ .Values.containerPort }}
+            initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
+            

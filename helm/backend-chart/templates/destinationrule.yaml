@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: {{ .Values.istio.destinationRule.name }}
+  namespace: {{ .Values.namespace }}
+spec:
+  host: backend
+  trafficPolicy:
+    loadBalancer:
+      simple: {{ .Values.istio.destinationRule.loadBalancer }}
+  subsets:
+    {{- range .Values.istio.destinationRule.subsets }}
+    - name: {{ .name }}
+      labels:
+        version: {{ .version }}
+    {{- end }}

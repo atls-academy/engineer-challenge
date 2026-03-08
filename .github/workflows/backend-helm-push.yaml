@@ -1,0 +1,39 @@
+name: Build Docker Images (backend)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "helm/backend-chart/**"
+
+jobs:
+  trigger-build:
+    uses: vwency/workflow/.github/workflows/buildx.yaml@main
+    with:
+      image-name: ${{ github.repository }}/backend
+      context: "./backend/rust-kratos"
+      dockerfile: "./backend/rust-kratos/Dockerfile"
+    secrets:
+      personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+  trigger-helm-push:
+    uses: vwency/workflow/.github/workflows/helm-push-ghcr.yaml@main
+    with:
+      chart-path: "./helm/backend-chart"
+    secrets:
+      personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+  trigger-cleanup:
+    needs: [trigger-build]
+    uses: vwency/workflow/.github/workflows/clean-registry.yaml@main
+    with:
+      owner: ${{ github.repository_owner }}
+      repository: engineer-challenge
+      package: engineer-challenge/backend
+      keep_n_tagged: 2
+      dry_run: false
+    secrets:
+      personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}

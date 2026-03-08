@@ -1,0 +1,6 @@
+apiVersion: v2
+name: backend-chart
+description: Backend service with Istio ingress
+type: application
+version: 0.1.0
+appVersion: "master"

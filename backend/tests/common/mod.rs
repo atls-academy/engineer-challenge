@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 use reqwest::Client;
 use rust_kratos::infrastructure::adapters::kratos::client::KratosClient;
 use serde::Deserialize;
@@ -78,16 +80,13 @@ impl MailhogClient {
     pub async fn fetch_recovery_link(&self, email: &str) -> Option<String> {
         for _ in 0..10 {
             tokio::time::sleep(Duration::from_millis(500)).await;
-
             let resp = self
                 .client
                 .get(format!("{}/search?kind=to&query={}", self.base_url, email))
                 .send()
                 .await
                 .ok()?;
-
             let data: MailhogResponse = resp.json().await.ok()?;
-
             if let Some(msg) = data.items.first() {
                 if let Some(link) = Self::extract_link(&msg.content.body, "recovery") {
                     return Some(link);

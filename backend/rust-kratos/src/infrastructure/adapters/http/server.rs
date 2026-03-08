@@ -1,4 +1,4 @@
-use crate::application::bootstrap::config::ServerConfig;
+use crate::application::boostrap::config::ServerConfig;
 use crate::infrastructure::adapters::graphql::handlers::{graphql_handler, graphql_playground};
 use crate::infrastructure::adapters::kratos::client::KratosClient;
 use crate::presentation::api::graphql::schema::AppSchema;
@@ -48,7 +48,7 @@ pub async fn start(
             }
         }
 
-        let app = App::new()
+        App::new()
             .wrap(prometheus.clone())
             .wrap(TracingLogger::default())
             .wrap(cors)
@@ -59,9 +59,7 @@ pub async fn start(
                     .route(web::post().to(graphql_handler))
                     .route(web::get().to(graphql_playground)),
             )
-            .configure(health_check::configure);
-
-        app
+            .configure(health_check::configure)
     })
     .bind(&bind_address_clone)
     .with_context(|| format!("Failed to bind server to {}", bind_address_clone))?;

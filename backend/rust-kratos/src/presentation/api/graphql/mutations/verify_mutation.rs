@@ -1,5 +1,5 @@
 use crate::application::usecases::auth::verification::VerificationUseCase;
-use crate::presentation::api::graphql::inputs::inputs::{
+use crate::presentation::api::graphql::inputs::{
     SendVerificationCodeInput, SubmitVerificationCodeInput, VerifyByLinkInput,
 };
 use async_graphql::{Context, Object, Result};

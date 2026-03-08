@@ -27,12 +27,11 @@ impl KratosAuthenticationAdapter {
 #[async_trait]
 impl AuthenticationPort for KratosAuthenticationAdapter {
     async fn initiate_login(&self, cookie: Option<&str>) -> Result<String, DomainError> {
-        if self.session_adapter.check_active_session(cookie).await {
-            if !self.session_adapter.is_recovery_session(cookie).await {
+        if self.session_adapter.check_active_session(cookie).await
+            && !self.session_adapter.is_recovery_session(cookie).await {
                 error!("Login attempt with an already active session");
                 return Err(DomainError::AlreadyLoggedIn);
             }
-        }
 
         let flow = fetch_flow(&self.client.client, &self.client.public_url, "login", None)
             .await

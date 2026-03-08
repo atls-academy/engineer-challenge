@@ -73,7 +73,7 @@ pub async fn post_flow(
         .json(&data)
         .send()
         .await
-        .map_err(|e| KratosFlowError::network(e))?;
+        .map_err(KratosFlowError::network)?;
 
     let response_cookies = extract_cookies(&response);
     let status = response.status();
@@ -89,7 +89,7 @@ pub async fn post_flow(
     let data = response
         .json::<serde_json::Value>()
         .await
-        .map_err(|e| KratosFlowError::network(e))?;
+        .map_err(KratosFlowError::network)?;
 
     Ok(PostFlowResult {
         data,

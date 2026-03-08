@@ -1,4 +1,4 @@
-use crate::application::bootstrap::config::KratosConfig;
+use crate::application::boostrap::config::KratosConfig;
 use reqwest::Client;
 use std::time::Duration;
 

@@ -1,6 +1,6 @@
 use crate::domain::ports::recovery::RecoveryRequest;
 use crate::infrastructure::di::container::UseCases;
-use crate::presentation::api::graphql::inputs::inputs::RecoveryInput;
+use crate::presentation::api::graphql::inputs::RecoveryInput;
 use async_graphql::{Context, Object, Result};
 use std::sync::Arc;
 use tracing::info;

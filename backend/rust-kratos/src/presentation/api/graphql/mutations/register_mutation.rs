@@ -1,7 +1,7 @@
 use crate::domain::ports::registration::RegistrationData;
 use crate::infrastructure::adapters::graphql::cookies::ResponseCookies;
 use crate::infrastructure::di::container::UseCases;
-use crate::presentation::api::graphql::inputs::inputs::RegisterInput;
+use crate::presentation::api::graphql::inputs::RegisterInput;
 use async_graphql::{Context, Object, Result};
 use std::sync::Arc;
 

@@ -45,9 +45,10 @@ Ory экосистема
 
 ### Continue
 
-1. GitOps чтение новых helm релизов, из применение.
-2. Локальный раннер github actions.
-3. Coverage тесты в ci, codecov, SonarQube
+1. rust_hydra, централизованный сервис по валидации и extract user traits из access_token.
+2. GitOps чтение новых helm релизов, из применение.
+3. Локальный раннер github actions.
+4. Coverage тесты в ci, codecov, SonarQube
 
 Схема упрощена, без **CommandHandler**
 

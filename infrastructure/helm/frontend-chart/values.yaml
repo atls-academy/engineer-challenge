@@ -1,0 +1,45 @@
+replicaCount: 2
+
+image:
+  repository: ghcr.io/vwency/engineer-challenge/frontend-entrypoint
+  tag: master
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: ghcr-secret
+
+serviceAccount:
+  name: frontend-sa
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+env:
+  PORT: "80"
+
+livenessProbe:
+  httpGet:
+    path: /
+    port: 80
+  initialDelaySeconds: 30
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: 80
+  initialDelaySeconds: 5
+  periodSeconds: 5
+
+istio:
+  gateway: frontend-gateway
+  loadBalancer: ROUND_ROBIN

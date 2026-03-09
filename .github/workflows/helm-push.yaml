@@ -8,11 +8,19 @@ on:
       - master
     paths:
       - "infrastructure/helm/backend-chart/**"
+      - "infrastructure/helm/frontend-chart/**"
 
 jobs:
-  trigger-helm-push:
+  trigger-helm-push-backend:
     uses: vwency/workflow/.github/workflows/helm-push-ghcr.yaml@main
     with:
       chart-path: "./infrastructure/helm/backend-chart"
+    secrets:
+      personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+
+  trigger-helm-push-frontend:
+    uses: vwency/workflow/.github/workflows/helm-push-ghcr.yaml@main
+    with:
+      chart-path: "./infrastructure/helm/frontend-chart"
     secrets:
       personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}

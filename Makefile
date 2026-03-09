@@ -11,4 +11,4 @@ down:
 	$(MAKE) -C frontend down
 
 cleanup:
-	$(MAKE) -C infrastructure cleanup
+	$(MAKE) -C infrastructure/local_development cleanup

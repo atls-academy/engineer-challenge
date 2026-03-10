@@ -1,4 +1,4 @@
-use crate::domain::errors::DomainError;
+use crate::domain::errors::{AuthError, DomainError};
 use crate::domain::ports::identity::IdentityPort;
 use crate::domain::ports::session::SessionPort;
 use crate::infrastructure::adapters::kratos::client::KratosClient;
@@ -68,7 +68,7 @@ impl KratosSessionAdapter {
 
         match response.status() {
             StatusCode::UNAUTHORIZED | StatusCode::FORBIDDEN => {
-                return Err(DomainError::NotAuthenticated);
+                return Err(AuthError::NotAuthenticated.into());
             }
             StatusCode::TOO_MANY_REQUESTS => {
                 return Err(DomainError::ServiceUnavailable(
@@ -112,7 +112,9 @@ impl SessionPort for KratosSessionAdapter {
 
         match response.status() {
             s if s.is_success() || s == StatusCode::FOUND || s == StatusCode::SEE_OTHER => Ok(()),
-            StatusCode::UNAUTHORIZED | StatusCode::FORBIDDEN => Err(DomainError::NotAuthenticated),
+            StatusCode::UNAUTHORIZED | StatusCode::FORBIDDEN => {
+                Err(AuthError::NotAuthenticated.into())
+            }
             s => {
                 let error_text = response.text().await.unwrap_or_else(|_| s.to_string());
                 Err(DomainError::ServiceUnavailable(format!(

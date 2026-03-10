@@ -1,3 +1,4 @@
+use crate::domain::value_objects::flow_id::FlowId;
 use crate::infrastructure::adapters::kratos::models::errors::KratosFlowError;
 use crate::infrastructure::adapters::kratos::models::flows::{FlowResult, PostFlowResult};
 use reqwest::{Client, StatusCode, header};
@@ -45,11 +46,12 @@ pub async fn fetch_flow(
         .map_err(|e| format!("Failed to parse {} flow response: {}", endpoint, e))?;
 
     let csrf_token = extract_csrf_token(&flow)?;
+    let flow_id = extract_flow_id(&flow)?;
     let mut all_cookies = cookie.map(|c| vec![c.to_string()]).unwrap_or_default();
     all_cookies.extend(flow_cookies);
 
     Ok(FlowResult {
-        flow,
+        flow_id,
         csrf_token,
         cookies: all_cookies,
     })
@@ -59,12 +61,17 @@ pub async fn post_flow(
     client: &Client,
     public_url: &str,
     endpoint: &str,
-    flow_id: &str,
+    flow_id: &FlowId,
     data: serde_json::Value,
     cookies: &[String],
 ) -> Result<PostFlowResult, KratosFlowError> {
-    let url = format!("{}/self-service/{}?flow={}", public_url, endpoint, flow_id)
-        .replace("localhost", "127.0.0.1");
+    let url = format!(
+        "{}/self-service/{}?flow={}",
+        public_url,
+        endpoint,
+        flow_id.as_str()
+    )
+    .replace("localhost", "127.0.0.1");
 
     let response = client
         .post(&url)
@@ -120,6 +127,13 @@ fn extract_csrf_token(flow: &serde_json::Value) -> Result<String, Box<dyn std::e
         .ok_or_else(|| "CSRF token not found in flow response".into())
 }
 
+fn extract_flow_id(flow: &serde_json::Value) -> Result<FlowId, Box<dyn std::error::Error>> {
+    flow["id"]
+        .as_str()
+        .map(FlowId::new)
+        .ok_or_else(|| "Flow ID not found in response".into())
+}
+
 async fn handle_redirect(
     client: &Client,
     public_url: &str,
@@ -134,7 +148,7 @@ async fn handle_redirect(
         .and_then(|h| h.to_str().ok())
         .ok_or("No redirect location found")?;
 
-    let flow_id = location
+    let flow_id_str = location
         .split("flow=")
         .nth(1)
         .ok_or(format!("Flow ID not found in redirect URL: {}", location))?
@@ -146,7 +160,7 @@ async fn handle_redirect(
         "{}/self-service/{}/flows?id={}",
         public_url.replace("localhost", "127.0.0.1"),
         endpoint,
-        flow_id
+        flow_id_str
     );
 
     let mut flow_request = client.get(&flow_url);
@@ -173,11 +187,12 @@ async fn handle_redirect(
         .map_err(|e| format!("Failed to parse {} flow response: {}", endpoint, e))?;
 
     let csrf_token = extract_csrf_token(&flow)?;
+    let flow_id = extract_flow_id(&flow)?;
     let mut all_cookies = cookie.map(|c| vec![c.to_string()]).unwrap_or_default();
     all_cookies.extend(flow_cookies);
 
     Ok(FlowResult {
-        flow,
+        flow_id,
         csrf_token,
         cookies: all_cookies,
     })

@@ -1,6 +1,6 @@
 use crate::application::queries::QueryHandler;
 use crate::domain::entities::user_profile::UserProfile;
-use crate::domain::errors::DomainError;
+use crate::domain::errors::{AuthError, DomainError};
 use crate::domain::ports::IdentityPort;
 use async_trait::async_trait;
 use std::sync::Arc;
@@ -22,7 +22,7 @@ impl GetCurrentUserQueryHandler {
 #[async_trait]
 impl QueryHandler<GetCurrentUserQuery, UserProfile> for GetCurrentUserQueryHandler {
     async fn handle(&self, query: GetCurrentUserQuery) -> Result<UserProfile, DomainError> {
-        let cookie = query.cookie.ok_or(DomainError::NotAuthenticated)?;
+        let cookie = query.cookie.ok_or(AuthError::NotAuthenticated)?;
         self.identity_port.get_current_user(&cookie).await
     }
 }

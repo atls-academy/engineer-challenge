@@ -1,5 +1,5 @@
 use crate::domain::entities::user_profile::UserProfile;
-use crate::domain::errors::DomainError;
+use crate::domain::errors::{AuthError, DomainError};
 use crate::domain::ports::identity::IdentityPort;
 use crate::infrastructure::adapters::kratos::client::KratosClient;
 use async_trait::async_trait;
@@ -14,6 +14,23 @@ impl KratosIdentityAdapter {
     pub fn new(client: Arc<KratosClient>) -> Self {
         Self { client }
     }
+}
+
+#[derive(serde::Deserialize)]
+struct SessionResponse {
+    identity: Identity,
+}
+
+#[derive(serde::Deserialize)]
+struct Identity {
+    traits: Traits,
+}
+
+#[derive(serde::Deserialize)]
+struct Traits {
+    email: String,
+    username: String,
+    geo_location: Option<String>,
 }
 
 #[async_trait]
@@ -32,32 +49,24 @@ impl IdentityPort for KratosIdentityAdapter {
             .map_err(|e| DomainError::ServiceUnavailable(e.to_string()))?;
 
         if !response.status().is_success() {
-            return Err(DomainError::NotAuthenticated);
+            return Err(AuthError::NotAuthenticated.into());
         }
 
-        let session_data: serde_json::Value = response
+        let session: SessionResponse = response
             .json()
             .await
             .map_err(|e| DomainError::ServiceUnavailable(e.to_string()))?;
 
-        let email = session_data["identity"]["traits"]["email"]
-            .as_str()
-            .ok_or_else(|| DomainError::InvalidData("Email not found".into()))?
-            .to_string();
+        Ok(UserProfile::from(session.identity.traits))
+    }
+}
 
-        let username = session_data["identity"]["traits"]["username"]
-            .as_str()
-            .ok_or_else(|| DomainError::InvalidData("Username not found".into()))?
-            .to_string();
-
-        let geo_location = session_data["identity"]["traits"]["geo_location"]
-            .as_str()
-            .map(|s| s.to_string());
-
-        Ok(UserProfile {
-            email,
-            username,
-            geo_location,
-        })
+impl From<Traits> for UserProfile {
+    fn from(t: Traits) -> Self {
+        Self {
+            email: t.email,
+            username: t.username,
+            geo_location: t.geo_location,
+        }
     }
 }

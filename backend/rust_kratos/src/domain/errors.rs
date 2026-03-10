@@ -1,5 +1,5 @@
 #[derive(Debug, thiserror::Error)]
-pub enum DomainError {
+pub enum AuthError {
     #[error("Not authenticated")]
     NotAuthenticated,
     #[error("Session expired")]
@@ -10,6 +10,12 @@ pub enum DomainError {
     InvalidCredentials,
     #[error("Privileged session required")]
     PrivilegedSessionRequired,
+}
+
+#[derive(Debug, thiserror::Error)]
+pub enum DomainError {
+    #[error(transparent)]
+    Auth(#[from] AuthError),
     #[error("Conflict: {0}")]
     Conflict(String),
     #[error("Not found: {0}")]

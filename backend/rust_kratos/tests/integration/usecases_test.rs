@@ -1,17 +1,19 @@
 use rust_kratos::application::commands::CommandHandler;
-use rust_kratos::application::commands::login::LoginCommand;
-use rust_kratos::application::commands::login::LoginCommandHandler;
-use rust_kratos::application::commands::logout::LogoutCommand;
-use rust_kratos::application::commands::logout::LogoutCommandHandler;
-use rust_kratos::application::commands::recovery::RecoveryCommand;
-use rust_kratos::application::commands::recovery::RecoveryCommandHandler;
-use rust_kratos::application::commands::register::RegisterCommand;
-use rust_kratos::application::commands::register::RegisterCommandHandler;
-use rust_kratos::application::commands::settings::UpdateSettingsCommand;
-use rust_kratos::application::commands::settings::UpdateSettingsCommandHandler;
+use rust_kratos::application::commands::account::recovery::{
+    RecoveryCommand, RecoveryCommandHandler,
+};
+use rust_kratos::application::commands::account::settings::{
+    UpdateSettingsCommand, UpdateSettingsCommandHandler,
+};
+use rust_kratos::application::commands::auth::login::{LoginCommand, LoginCommandHandler};
+use rust_kratos::application::commands::auth::logout::{LogoutCommand, LogoutCommandHandler};
+use rust_kratos::application::commands::identity::register::{
+    RegisterCommand, RegisterCommandHandler,
+};
 use rust_kratos::application::queries::QueryHandler;
-use rust_kratos::application::queries::get_current_user::GetCurrentUserQuery;
-use rust_kratos::application::queries::get_current_user::GetCurrentUserQueryHandler;
+use rust_kratos::application::queries::get_current_user::{
+    GetCurrentUserQuery, GetCurrentUserQueryHandler,
+};
 use rust_kratos::domain::ports::login::LoginCredentials;
 use rust_kratos::domain::ports::recovery::RecoveryRequest;
 use rust_kratos::domain::ports::registration::RegistrationData;

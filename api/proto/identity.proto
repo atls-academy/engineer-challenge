@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package identity;
+
+option go_package = "github.com/Aidajy111/engineer-challenge/internal/transport/grpc/gen;identityv1";
+
+service IdentityService {
+  // register new user
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+
+  // authorization and get token
+  rpc Login(LoginRequest) returns (LoginResponse);
+
+  // password recovery request
+  rpc ForgotPassword(ForgotPasswordRequest) returns (ForgotPasswordResponse);
+
+  // setting a new password using the token from the email
+  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse);
+}
+
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+  string display_name = 3;
+}
+
+message RegisterResponse {
+  string user_id = 1;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+}
+
+message ForgotPasswordRequest {
+  string email = 1;
+}
+
+message ForgotPasswordResponse {
+  bool success = 1;
+}
+
+message ResetPasswordRequest {
+  string token = 1;
+  string new_password = 2;
+}
+
+message ResetPasswordResponse {
+  bool success = 1;
+}

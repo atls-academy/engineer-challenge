@@ -4,7 +4,7 @@ COMPOSE = docker compose
 RUST_BIN = cargo
 RUST_ARGS = run
 
-INFRA_PATH = ../../infrastructure/local_development
+INFRA_PATH = ../../../infrastructure/local_development
 
 run:
 	$(RUST_BIN) $(RUST_ARGS)

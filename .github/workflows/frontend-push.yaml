@@ -7,15 +7,15 @@ on:
       - main
       - master
     paths:
-      - "frontend/**"
+      - "web/frontend/**"
 
 jobs:
   trigger-build:
     uses: vwency/workflow/.github/workflows/buildx.yaml@main
     with:
       image-name: ${{ github.repository }}/frontend-entrypoint
-      context: "./frontend"
-      dockerfile: "./frontend/Dockerfile"
+      context: "./web/frontend"
+      dockerfile: "./web/frontend/Dockerfile"
       build-args: |
         NEXT_PUBLIC_GRAPHQL_URL=http://localhost:8080/graphql
         NEXT_INTERNAL_GRAPHQL_URL=http://rust_kratos:8080/graphql

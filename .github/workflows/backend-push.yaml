@@ -7,15 +7,15 @@ on:
       - main
       - master
     paths:
-      - "backend/rust_kratos/**"
+      - "web/backend/rust_kratos/**"
 
 jobs:
   trigger-build:
     uses: vwency/workflow/.github/workflows/buildx.yaml@main
     with:
       image-name: ${{ github.repository }}/rust-kratos
-      context: "./backend/rust_kratos"
-      dockerfile: "./backend/rust_kratos/Dockerfile"
+      context: "./web/backend/rust_kratos"
+      dockerfile: "./web/backend/rust_kratos/Dockerfile"
     secrets:
       personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 

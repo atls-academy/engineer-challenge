@@ -7,7 +7,7 @@
 ## Architecture
 
 **DDD**  
-- Фокус на доменной логике  (entyties, port/in ports/out)
+- Фокус на доменной логике  (entities, port/in ports/out)
 - Улучшенная поддерживаемость  
 - Чёткое разделение бизнес-слоёв
 

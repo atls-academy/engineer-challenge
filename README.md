@@ -45,10 +45,9 @@
 Auth-сервис сам по себе — это один BC в рамках большей системы. Дробить BC внутри сервиса — это over-engineering, если нет реальных причин.
 
 ### Continue
-1. Написание сервиса `session_manager`, для генерации jwt на opaque токене kratos.
-2. GitOps — чтение новых helm релизов и их применение.
-3. Coverage тесты в CI, codecov, SonarQube.  
-4. Нагрузочные тесты на GetCurrentUserQuery, Commands
+1. GitOps — чтение новых helm релизов и их применение.
+2. Coverage тесты в CI, codecov, SonarQube.  
+3. Нагрузочные тесты на GetCurrentUserQuery, Commands
 
 Схема command запроса:
 ```mermaid

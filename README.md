@@ -54,37 +54,68 @@ Ory экосистема
 
 ```mermaid
 flowchart TD
-    A[graphql-gateway]
-    A --> D{Commands}
-    A --> E[Queries]
+flowchart TD
+    GQL[GraphQL Gateway]
 
-    D --> F[LoginCommand]
-    D --> FF[LogoutCommand]
-    D --> FFF[RecoveryCommand]
-    D --> FFFF[SettingsCommand]
-    D --> FFFFF[RegisterCommand]
-    D --> FFFFFF[VerificationCommand]
+    GQL --> Commands
+    GQL --> Queries
 
-    E --> AA[GetCurrentUserQuery]
+    subgraph Commands
+        LoginCommand
+        LogoutCommand
+        RecoveryCommand
+        UpdateSettingsCommand
+        RegisterCommand
+        VerificationCommand
+    end
 
-    F --> U{LoginPort}
-    FF --> UU{LogoutPort}
-    FFF --> UUU{RecoveryPort}
-    FFFF --> UUUU{SettingsPort}
-    FFFFF --> UUUUU{RegisterPort}
-    FFFFFF --> UUUUUU{VerificationPort}
+    subgraph Queries
+        GetCurrentUserQuery
+    end
 
-    AA --> UUUUUUU{SessionPort}
+    subgraph Ports
+        AuthenticationPort
+        SessionPort
+        RecoveryPort
+        SettingsPort
+        RegistrationPort
+        VerificationPort
+        IdentityPort
+    end
 
-    T[KratosAdapter]
+    LoginCommand --> AuthenticationPort
+    LogoutCommand --> SessionPort
+    RecoveryCommand --> RecoveryPort
+    UpdateSettingsCommand --> SettingsPort
+    RegisterCommand --> RegistrationPort
+    VerificationCommand --> VerificationPort
+    GetCurrentUserQuery --> IdentityPort
 
-    U --> T
-    UU --> T
-    UUU --> T
-    UUUU --> T
-    UUUUU --> T
-    UUUUUU --> T
-    UUUUUUU --> T
+    subgraph KratosAdapters
+        KratosAuthenticationAdapter
+        KratosSessionAdapter
+        KratosRecoveryAdapter
+        KratosSettingsAdapter
+        KratosRegistrationAdapter
+        KratosVerificationAdapter
+        KratosIdentityAdapter
+    end
+
+    AuthenticationPort --> KratosAuthenticationAdapter
+    SessionPort --> KratosSessionAdapter
+    RecoveryPort --> KratosRecoveryAdapter
+    SettingsPort --> KratosSettingsAdapter
+    RegistrationPort --> KratosRegistrationAdapter
+    VerificationPort --> KratosVerificationAdapter
+    IdentityPort --> KratosIdentityAdapter
+
+    KratosAuthenticationAdapter --> Kratos
+    KratosSessionAdapter --> Kratos
+    KratosRecoveryAdapter --> Kratos
+    KratosSettingsAdapter --> Kratos
+    KratosRegistrationAdapter --> Kratos
+    KratosVerificationAdapter --> Kratos
+    KratosIdentityAdapter --> Kratos
 ```
 
 ### Тесты

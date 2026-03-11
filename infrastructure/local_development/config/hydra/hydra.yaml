@@ -6,7 +6,7 @@ serve:
       enabled: true
       allowed_origins:
         - http://localhost:8080
-        - http://localhost:8081
+        - http://127.0.0.1:8080
       allowed_methods:
         - GET
         - POST
@@ -24,10 +24,10 @@ dsn: postgres://hydra:secret@postgres-hydra:5432/hydra?sslmode=disable
 urls:
   self:
     issuer: http://localhost:4444
-  login: http://localhost:3000/login
-  consent: http://localhost:8080/consent
-  logout: http://localhost:3000/logout
-  error: http://localhost:3000/error
+  login: http://host.docker.internal:8080/oauth2/login
+  consent: http://host.docker.internal:8080/oauth2/consent
+  logout: http://localhost:8080/logout
+  error: http://localhost:8080/error
 secrets:
   system:
     - youReallyNeedToChangeThis32CharSecret
@@ -41,6 +41,14 @@ oidc:
 oauth2:
   pkce:
     enforced: false
+strategies:
+  access_token: jwt
+  scope: wildcard
+ttl:
+  access_token: 1h
+  refresh_token: 720h
+  id_token: 1h
+  auth_code: 10m
 log:
   level: debug
   format: json

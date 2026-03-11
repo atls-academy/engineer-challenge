@@ -2,11 +2,9 @@ networks:
   kratos-network:
     external: true
     name: kratos-network
-
 volumes:
   hydra-db-data:
     name: hydra-db-data
-
 services:
   postgres-hydra:
     image: postgres:17-alpine
@@ -24,7 +22,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-
   hydra-migrate:
     image: oryd/hydra:v2.3.0
     container_name: hydra-migrate
@@ -35,7 +32,6 @@ services:
       postgres-hydra:
         condition: service_healthy
     restart: on-failure
-
   hydra:
     image: oryd/hydra:v2.3.0
     container_name: hydra
@@ -60,9 +56,22 @@ services:
   hydra-client-init:
     image: oryd/hydra:v2.3.0
     container_name: hydra-client-init
-    volumes:
-      - ./config/hydra/register_client.sh:/register_client.sh:ro
-    entrypoint: ["/bin/sh", "/register_client.sh"]
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        sleep 5
+        hydra delete client session-manager --endpoint http://hydra:4445 || true
+        hydra create client \
+          --endpoint http://hydra:4445 \
+          --id session-manager \
+          --secret my-secret \
+          --grant-type authorization_code,refresh_token,client_credentials \
+          --response-type code,token \
+          --scope openid,profile,email,offline,offline_access \
+          --redirect-uri http://localhost:3000/callback \
+          --redirect-uri http://localhost:8080/oauth2/callback \
+          --redirect-uri http://127.0.0.1:8080/oauth2/callback \
+          --token-endpoint-auth-method client_secret_basic
     networks:
       - kratos-network
     depends_on:

@@ -2,7 +2,7 @@
 sleep 5
 hydra create client \
   --endpoint http://hydra:4445 \
-  --id my-client \
+  --id session-manager \
   --secret my-secret \
   --grant-type authorization_code,refresh_token \
   --response-type code \

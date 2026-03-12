@@ -20,3 +20,31 @@ url = "redis://127.0.0.1:6379"
 cache_ttl_secs = 300
 max_retries = 5
 retry_delay_ms = 2000
+
+[rate_limits.login]
+max_requests = 5
+window_seconds = 60
+
+[rate_limits.register]
+max_requests = 3
+window_seconds = 3600
+
+[rate_limits.recovery]
+max_requests = 3
+window_seconds = 3600
+
+[rate_limits.settings]
+max_requests = 10
+window_seconds = 60
+
+[rate_limits.verification]
+max_requests = 5
+window_seconds = 60
+
+[rate_limits.current_user]
+max_requests = 60
+window_seconds = 60
+
+[rate_limits.logout]
+max_requests = 10
+window_seconds = 60

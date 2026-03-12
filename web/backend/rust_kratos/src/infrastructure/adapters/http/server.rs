@@ -35,6 +35,7 @@ pub async fn start(
                 http::header::AUTHORIZATION,
                 http::header::CONTENT_TYPE,
                 http::header::ACCEPT,
+                http::header::HeaderName::from_static("x-forwarded-for"),
             ])
             .supports_credentials()
             .max_age(cors_max_age);

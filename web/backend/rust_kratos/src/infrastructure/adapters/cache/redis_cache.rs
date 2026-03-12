@@ -56,6 +56,10 @@ impl RedisCache {
         conn.get::<_, String>(key).await.ok()
     }
 
+    pub fn connection(&self) -> redis::aio::ConnectionManager {
+        self.connection.clone()
+    }
+
     pub async fn set_ex(&self, key: &str, value: &str, ttl_seconds: u64) {
         let mut conn = self.connection.clone();
         let _: Result<(), _> = conn.set_ex(key, value, ttl_seconds).await;

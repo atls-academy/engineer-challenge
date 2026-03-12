@@ -1,21 +1,18 @@
-use crate::application::{
-    bootstrap::config::Config,
-    commands::{
-        account::{
-            recovery::RecoveryCommandHandler, settings::UpdateSettingsCommandHandler,
-            verification::VerificationCommandHandler,
-        },
-        auth::{login::LoginCommandHandler, logout::LogoutCommandHandler},
-        identity::register::RegisterCommandHandler,
+use crate::application::bootstrap::config::{Config, RateLimitsConfig};
+use crate::application::commands::{
+    account::{
+        recovery::RecoveryCommandHandler, settings::UpdateSettingsCommandHandler,
+        verification::VerificationCommandHandler,
     },
-    queries::get_current_user::GetCurrentUserQueryHandler,
+    auth::{login::LoginCommandHandler, logout::LogoutCommandHandler},
+    identity::register::RegisterCommandHandler,
 };
+use crate::application::queries::get_current_user::GetCurrentUserQueryHandler;
+use crate::infrastructure::di::adapter_factory::AdapterFactory;
 use crate::infrastructure::{
     adapters::cache::redis_cache::RedisCache, adapters::kratos::client::KratosClient,
     di::factory::KratosAdapterFactory,
 };
-
-use crate::infrastructure::di::adapter_factory::AdapterFactory;
 use std::sync::Arc;
 use std::time::Duration;
 use thiserror::Error;
@@ -65,6 +62,8 @@ impl UseCases {
 #[derive(Clone)]
 pub struct AppContainer {
     pub use_cases: Arc<UseCases>,
+    pub cache: RedisCache,
+    pub rate_limits: RateLimitsConfig,
     kratos: Arc<KratosClient>,
 }
 
@@ -73,7 +72,6 @@ impl AppContainer {
         Self::validate_config(config)?;
 
         let kratos = Arc::new(KratosClient::new(&config.kratos));
-
         kratos
             .wait_until_ready()
             .await
@@ -87,11 +85,16 @@ impl AppContainer {
         .await
         .map_err(|e| ContainerError::Initialization(format!("Redis unavailable: {e}")))?;
 
-        let factory =
-            KratosAdapterFactory::from_client(kratos.clone(), cache, config.redis.cache_ttl_secs);
+        let factory = KratosAdapterFactory::from_client(
+            kratos.clone(),
+            cache.clone(),
+            config.redis.cache_ttl_secs,
+        );
 
         Ok(Self {
             use_cases: Arc::new(UseCases::new(&factory)),
+            cache,
+            rate_limits: config.rate_limits.clone(),
             kratos,
         })
     }

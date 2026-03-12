@@ -36,6 +36,7 @@ pub struct Config {
     pub kratos: KratosConfig,
     pub server: ServerConfig,
     pub redis: RedisConfig,
+    pub rate_limits: RateLimitsConfig,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -67,6 +68,23 @@ pub struct KratosConfig {
     pub retry_delay_ms: u64,
     #[serde(default = "default_accept_invalid_certs")]
     pub accept_invalid_certs: bool,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct RateLimitRuleConfig {
+    pub max_requests: u64,
+    pub window_seconds: u64,
+}
+
+#[derive(Debug, Clone, Deserialize)]
+pub struct RateLimitsConfig {
+    pub login: RateLimitRuleConfig,
+    pub register: RateLimitRuleConfig,
+    pub recovery: RateLimitRuleConfig,
+    pub settings: RateLimitRuleConfig,
+    pub verification: RateLimitRuleConfig,
+    pub current_user: RateLimitRuleConfig,
+    pub logout: RateLimitRuleConfig,
 }
 
 #[derive(Debug, Clone, Deserialize)]

@@ -1,3 +1,5 @@
+use crate::infrastructure::adapters::graphql::rate_limit::config::rules_from_config;
+use crate::infrastructure::adapters::graphql::rate_limit::limiter::RateLimiter;
 use crate::infrastructure::di::container::AppContainer;
 use crate::presentation::api::graphql::mutations::recovery_mutation::RecoveryMutation;
 use crate::presentation::api::graphql::mutations::register_mutation::RegisterMutation;
@@ -24,11 +26,16 @@ pub struct MutationRoot(
 pub type AppSchema = Schema<QueryRoot, MutationRoot, EmptySubscription>;
 
 pub fn create_schema(container: &AppContainer) -> AppSchema {
+    let rate_limiter = RateLimiter::new(container.cache.clone());
+    let rules = rules_from_config(&container.rate_limits);
+
     Schema::build(
         QueryRoot::default(),
         MutationRoot::default(),
         EmptySubscription,
     )
     .data(container.use_cases.clone())
+    .data(rate_limiter)
+    .data(rules)
     .finish()
 }

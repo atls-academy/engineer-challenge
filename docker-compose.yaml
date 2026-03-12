@@ -1,27 +1,26 @@
+version: '3.8'
 services:
-  # Наш сервис авторизации
-  auth-service:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "5555:5555"
-    environment:
-      - PORT=5555
-      - DATABASE_URL=postgres://user:pass@db:5432/auth_db?sslmode=disable
-    depends_on:
-      db:
-        condition: service_healthy
-
-  # База данных
   db:
     image: postgres:15-alpine
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: auth_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U user -d auth_db"]
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
+
+  auth-service:
+    build: .
+    ports:
+      - "5555:5555"
+    environment:
+      DATABASE_URL: "postgres://postgres:postgres@db:5432/postgres?sslmode=disable"
+      JWT_SECRET: "super-puper-secret-key"
+    depends_on:
+      db:
+        condition: service_healthy

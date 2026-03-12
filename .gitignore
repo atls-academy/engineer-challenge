@@ -1,1 +1,29 @@
 .idea
+.vscode
+
+# Binaries
+auth-service
+*.exe
+*.out
+*.test
+
+# Go build artifacts
+bin/
+dist/
+
+# Vendor (если решишь использовать)
+vendor/
+
+# OS / editor junk
+*.log
+*.swp
+*.swo
+*.DS_Store
+
+# Env / secrets
+.env
+*.env.local
+
+# Docker
+*.pid
+

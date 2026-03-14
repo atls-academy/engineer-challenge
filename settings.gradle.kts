@@ -13,4 +13,3 @@ dependencyResolutionManagement {
 }
 
 include(":server")
-include(":client")

@@ -1,4 +1,4 @@
-rootProject.name = "engineer-challenge-impl"
+rootProject.name = "engineer-challenge"
 
 pluginManagement {
     repositories {
@@ -18,3 +18,4 @@ dependencyResolutionManagement {
 include(":server")
 include(":core")
 include(":client")
+include(":domain")

@@ -17,6 +17,7 @@ kotlin {
 }
 
 dependencies {
+    implementation(project(":domain"))
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-netty")
     implementation("io.ktor:ktor-server-config-yaml")

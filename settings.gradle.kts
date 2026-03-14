@@ -12,4 +12,5 @@ dependencyResolutionManagement {
     }
 }
 
+include(":domain")
 include(":server")

@@ -3,7 +3,6 @@ val h2_version: String by project
 val koin_version: String by project
 val kotlin_version: String by project
 val kotlinx_rpc_grpc_version: String by project
-val kotlinx_rpc_version: String by project
 val logback_version: String by project
 val postgres_version: String by project
 val prometheus_version: String by project
@@ -12,7 +11,6 @@ plugins {
     kotlin("jvm") version "2.3.0"
     id("io.ktor.plugin") version "3.4.1"
     id("org.jetbrains.kotlin.plugin.serialization") version "2.3.0"
-    id("org.jetbrains.kotlinx.rpc.plugin") version "0.10.2"
     id("org.jetbrains.kotlinx.rpc.plugin") version "0.11.0-grpc-185"
 }
 
@@ -55,8 +53,6 @@ dependencies {
     implementation("org.postgresql:postgresql:$postgres_version")
     implementation("io.insert-koin:koin-ktor:$koin_version")
     implementation("io.insert-koin:koin-logger-slf4j:$koin_version")
-    implementation("org.jetbrains.kotlinx:kotlinx-rpc-krpc-ktor-server:$kotlinx_rpc_version")
-    implementation("org.jetbrains.kotlinx:kotlinx-rpc-krpc-ktor-client:$kotlinx_rpc_version")
     implementation("org.jetbrains.kotlinx:kotlinx-rpc-grpc-ktor-server:$kotlinx_rpc_grpc_version")
     implementation("org.jetbrains.kotlinx:kotlinx-rpc-grpc-client:$kotlinx_rpc_grpc_version")
     implementation("io.grpc:grpc-netty:1.79.0")

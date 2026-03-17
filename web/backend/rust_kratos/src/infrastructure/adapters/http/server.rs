@@ -1,8 +1,8 @@
 use crate::application::bootstrap::config::ServerConfig;
-use crate::infrastructure::adapters::graphql::handlers::{graphql_handler, graphql_playground};
-use crate::infrastructure::adapters::graphql::schema::AppSchema;
-use crate::infrastructure::adapters::kratos::client::KratosClient;
+use crate::infrastructure::di::container::AppContainer;
 use crate::presentation::api::rest::health_check;
+use crate::presentation::api::rest::middleware::cookies::CookieMiddleware;
+use crate::presentation::api::rest::v1::handlers;
 use actix_cors::Cors;
 use actix_web::{App, HttpServer, http, web};
 use actix_web_prometheus::PrometheusMetricsBuilder;
@@ -11,11 +11,7 @@ use std::sync::Arc;
 use tracing::info;
 use tracing_actix_web::TracingLogger;
 
-pub async fn start(
-    schema: Arc<AppSchema>,
-    config: ServerConfig,
-    kratos_client: Arc<KratosClient>,
-) -> anyhow::Result<()> {
+pub async fn start(config: ServerConfig, container: Arc<AppContainer>) -> anyhow::Result<()> {
     let bind_address = format!("{}:{}", config.host, config.port);
     info!("Booting HTTP server at http://{}", bind_address);
 
@@ -27,6 +23,7 @@ pub async fn start(
     let cors_max_age = config.cors_max_age;
     let cors_allowed_origins = config.cors_allowed_origins.clone();
     let bind_address_clone = bind_address.clone();
+    let use_cases = container.use_cases();
 
     let server = HttpServer::new(move || {
         let mut cors = Cors::default()
@@ -52,15 +49,11 @@ pub async fn start(
         App::new()
             .wrap(prometheus.clone())
             .wrap(TracingLogger::default())
+            .wrap(CookieMiddleware)
             .wrap(cors)
-            .app_data(web::Data::from(schema.clone()))
-            .app_data(web::Data::new(kratos_client.clone()))
-            .service(
-                web::resource("/graphql")
-                    .route(web::post().to(graphql_handler))
-                    .route(web::get().to(graphql_playground)),
-            )
+            .app_data(web::Data::new(use_cases.clone()))
             .configure(health_check::configure)
+            .service(web::scope("/api/v1").configure(handlers::configure))
     })
     .bind(&bind_address_clone)
     .with_context(|| format!("Failed to bind server to {}", bind_address_clone))?;
@@ -69,7 +62,6 @@ pub async fn start(
         "✅ HTTP server successfully started on http://{}",
         bind_address
     );
-    info!("🚀 GraphQL Playground: http://{}/graphql", bind_address);
     info!("📊 Prometheus Metrics: http://{}/metrics", bind_address);
 
     server

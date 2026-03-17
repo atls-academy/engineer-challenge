@@ -1,5 +1,4 @@
 use crate::application::bootstrap::config::Config;
-use crate::infrastructure::adapters::graphql::schema::{AppSchema, create_schema};
 use crate::infrastructure::adapters::http::server;
 use crate::infrastructure::di::container::AppContainer;
 use std::sync::Arc;
@@ -25,23 +24,18 @@ pub async fn run() -> anyhow::Result<()> {
 
     info!("Starting application...");
 
-    let container = AppContainer::new(&config).await?;
-    let schema = Arc::new(create_schema(&container));
+    let container = Arc::new(AppContainer::new(&config).await?);
 
     tokio::select! {
-        result = start_server(schema, &config, &container) => result?,
+        result = start_server(&config, container) => result?,
         _ = shutdown_signal() => info!("Shutdown signal received, starting graceful shutdown..."),
     }
 
     Ok(())
 }
 
-async fn start_server(
-    schema: Arc<AppSchema>,
-    config: &Config,
-    container: &AppContainer,
-) -> anyhow::Result<()> {
-    server::start(schema, config.server.clone(), container.kratos_client())
+async fn start_server(config: &Config, container: Arc<AppContainer>) -> anyhow::Result<()> {
+    server::start(config.server.clone(), container)
         .await
         .map_err(|e| anyhow::anyhow!("Server error: {}", e))
 }

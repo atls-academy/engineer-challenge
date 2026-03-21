@@ -1,0 +1,28 @@
+services:
+  postgres-kratos:
+    image: docker.io/postgres:17-alpine
+    container_name: postgres-kratos
+    environment:
+      POSTGRES_USER: kratos
+      POSTGRES_PASSWORD: kratos_secret
+      POSTGRES_DB: kratos
+    ports:
+      - "5433:5432"
+    volumes:
+      - kratos-db-data:/var/lib/postgresql/data
+    networks:
+      - kratos-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kratos"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  kratos-network:
+    driver: bridge
+    name: kratos-network
+
+volumes:
+  kratos-db-data:
+    name: kratos-db-data

@@ -1,0 +1,6 @@
+[submodule "web/backend/jwt_persistent"]
+	path = web/backend/jwt_persistent
+	url = https://github.com/vwency/jwt_persistent
+[submodule "web/backend/rust_kratos"]
+	path = web/backend/rust_kratos
+	url = https://github.com/vwency/rust_kratos

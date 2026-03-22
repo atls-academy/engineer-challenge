@@ -1,4 +1,0 @@
-[submodule "web/backend/rust_kratos"]
-	path = web/backend/rust_kratos
-	url = git@github.com:vwency/rust_kratos.git
-	branch = main

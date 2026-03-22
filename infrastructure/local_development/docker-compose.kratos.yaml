@@ -1,57 +1,61 @@
-name: Build Docker Images (backend)
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-      - master
-    paths:
-      - "web/backend/rust_kratos/**"
+services:
+  postgres-kratos:
+    image: docker.io/postgres:17-alpine
+    container_name: postgres-kratos
+    environment:
+      POSTGRES_USER: kratos
+      POSTGRES_PASSWORD: kratos_secret
+      POSTGRES_DB: kratos
+    ports:
+      - "5433:5432"
+    volumes:
+      - kratos-db-data:/var/lib/postgresql/data
+    networks:
+      - kratos-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U kratos"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-jobs:
-  trigger-build:
-    runs-on: ubuntu-latest
-    outputs:
-    steps:
-      - name: Checkout with submodules
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          fetch-depth: 0
+  kratos-migrate:
+    image: docker.io/oryd/kratos:v1.3.0
+    container_name: kratos-migrate
+    environment:
+      DSN: postgres://kratos:kratos_secret@postgres-kratos:5432/kratos?sslmode=disable
+    command: -c /etc/config/kratos/kratos.yml migrate sql -e --yes
+    volumes:
+      - ./config/kratos:/etc/config/kratos
+    networks:
+      - kratos-network
+    depends_on:
+      postgres-kratos:
+        condition: service_healthy
+    restart: on-failure
 
-  trigger-build-image:
-    needs: [checkout]
-    uses: vwency/workflow/.github/workflows/buildx.yaml@main
-    with:
-      image-name: ${{ github.repository }}/rust-kratos
-      context: "./web/backend/rust_kratos"
-      dockerfile: "./web/backend/rust_kratos/Dockerfile"
-    secrets:
-      personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  kratos:
+    image: docker.io/oryd/kratos:v1.3.0
+    container_name: kratos
+    command: serve -c /etc/config/kratos/kratos.yml --dev --watch-courier
+    ports:
+      - "4433:4433"
+      - "4434:4434"
+    environment:
+      LOG_LEVEL: debug
+    volumes:
+      - ./config/kratos:/etc/config/kratos
+    networks:
+      - kratos-network
+    depends_on:
+      kratos-migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: trigger-build-image
-    steps:
-      - name: Checkout with submodules
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+networks:
+  kratos-network:
+    driver: bridge
+    name: kratos-network
 
-      - name: Deploy to environment
-        run: |
-          echo "Deploying application"
-
-  trigger-cleanup:
-    needs: [trigger-build-image]
-    uses: vwency/workflow/.github/workflows/clean-registry.yaml@main
-    with:
-      owner: ${{ github.repository_owner }}
-      repository: engineer-challenge
-      package: engineer-challenge/rust-kratos
-      keep_n_tagged: 2
-      dry_run: false
-    secrets:
-      personal_access_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+volumes:
+  kratos-db-data:
+    name: kratos-db-data

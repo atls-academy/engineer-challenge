@@ -1,0 +1,14 @@
+/home/vwency/Documents/Github/temp/engineer-challenge/target/debug/deps/serde-bb12392ba8f2adc2.d: /home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /home/vwency/Documents/Github/temp/engineer-challenge/target/debug/build/serde-e1c7e162cd1375cc/out/private.rs
+
+/home/vwency/Documents/Github/temp/engineer-challenge/target/debug/deps/libserde-bb12392ba8f2adc2.rlib: /home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /home/vwency/Documents/Github/temp/engineer-challenge/target/debug/build/serde-e1c7e162cd1375cc/out/private.rs
+
+/home/vwency/Documents/Github/temp/engineer-challenge/target/debug/deps/libserde-bb12392ba8f2adc2.rmeta: /home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /home/vwency/Documents/Github/temp/engineer-challenge/target/debug/build/serde-e1c7e162cd1375cc/out/private.rs
+
+/home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs:
+/home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs:
+/home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs:
+/home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs:
+/home/vwency/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs:
+/home/vwency/Documents/Github/temp/engineer-challenge/target/debug/build/serde-e1c7e162cd1375cc/out/private.rs:
+
+# env-dep:OUT_DIR=/home/vwency/Documents/Github/temp/engineer-challenge/target/debug/build/serde-e1c7e162cd1375cc/out
